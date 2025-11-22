@@ -1,5 +1,5 @@
 // Product data
-export const products = [
+export const photos = [
   {
     id: 1,
     name: "Premium Wireless Headphones",

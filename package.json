@@ -28,6 +28,7 @@
     "@fullcalendar/timegrid": "^6.1.17",
     "@iconify/svelte": "^5.0.0",
     "@melt-ui/svelte": "^0.86.6",
+    "@react2svelte/image-gallery": "^1.0.1",
     "chart.js": "^4.5.0",
     "daisyui": "^5.0.43",
     "leaflet": "^1.9.4",

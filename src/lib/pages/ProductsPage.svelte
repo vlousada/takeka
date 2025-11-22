@@ -108,9 +108,29 @@
       closeDeleteConfirmation();
     }
   }
+
+
+  import ImageGallery from '@react2svelte/image-gallery';
+  const images = [
+    {
+      original: 'https://picsum.photos/id/1018/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1018/250/150/'
+    },
+    {
+      original: 'https://picsum.photos/id/1015/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1015/250/150/'
+    },
+    {
+      original: 'https://picsum.photos/id/1019/1000/600/',
+      thumbnail: 'https://picsum.photos/id/1019/250/150/'
+    }
+  ]
 </script>
 
+
 <div class="space-y-8">
+
+  <ImageGallery items="{images}" showNav={false} autoPlay={true}/>
   <!-- Page header with enhanced styling -->
   <div
     class="relative overflow-hidden bg-gradient-to-r from-primary/5 via-secondary/5 to-accent/5 rounded-2xl p-6 border border-base-300/50"

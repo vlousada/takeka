@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,svelte}",
   ],
+
   darkMode: 'class',
   theme: {
     extend: {
@@ -127,7 +128,7 @@ export default {
     themes: [
       {
         modern: {
-          "primary": "#0ea5e9",
+          "primary": "#587878",
           "primary-focus": "#0284c7",
           "primary-content": "#ffffff",
           "secondary": "#d946ef",
