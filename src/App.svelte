@@ -4,21 +4,21 @@
   import HomePage from './lib/pages/HomePage.svelte';
   import UsersPage from './lib/pages/UsersPage.svelte';
   import ProductsPage from './lib/pages/ProductsPage.svelte';
-  import SettingsPage from './lib/pages/SettingsPage.svelte';
+  // import SettingsPage from './lib/pages/SettingsPage.svelte';
   import AnalyticsPage from './lib/pages/AnalyticsPage.svelte';
   import ProjectManagementPage from './lib/pages/ProjectManagementPage.svelte';
-  import ProfilePage from './lib/pages/ProfilePage.svelte';
-  import MapsPage from './lib/pages/MapsPage.svelte';
+  // import ProfilePage from './lib/pages/ProfilePage.svelte';
+  // import MapsPage from './lib/pages/MapsPage.svelte';
   import SchedulePage from './lib/pages/SchedulePage.svelte';
   import NotFoundPage from './lib/pages/NotFoundPage.svelte';
-  import LoginPage from './lib/pages/LoginPage.svelte';
-  import LoginV2 from './lib/pages/LoginV2.svelte';
-  import LoginV3 from './lib/pages/LoginV3.svelte';
-  import RegisterPage from './lib/pages/RegisterPage.svelte';
-  import RegisterV2 from './lib/pages/RegisterV2.svelte';
-  import RegisterV3 from './lib/pages/RegisterV3.svelte';
+  // import LoginPage from './lib/pages/LoginPage.svelte';
+  // import LoginV2 from './lib/pages/LoginV2.svelte';
+  // import LoginV3 from './lib/pages/LoginV3.svelte';
+  // import RegisterPage from './lib/pages/RegisterPage.svelte';
+  // import RegisterV2 from './lib/pages/RegisterV2.svelte';
+  // import RegisterV3 from './lib/pages/RegisterV3.svelte';
   import ChartsPage from './lib/pages/ChartsPage.svelte';
-  import GanttPage from './lib/pages/GanttPage.svelte';
+  // import GanttPage from './lib/pages/GanttPage.svelte';
   import { currentRoute } from './lib/router.js';
   import { pageTransitions } from './lib/utils/motion.js';
   import { themeActions } from './lib/stores/theme.js';
@@ -42,20 +42,20 @@
       $currentRoute === '/' ? HomePage
       : $currentRoute === '/users' ? UsersPage
       : $currentRoute === '/products' ? ProductsPage
-      : $currentRoute === '/settings' ? SettingsPage
+      // : $currentRoute === '/settings' ? SettingsPage
       : $currentRoute === '/analytics' ? AnalyticsPage
       : $currentRoute === '/charts' ? ChartsPage
       : $currentRoute === '/projects' ? ProjectManagementPage
-      : $currentRoute === '/profile' ? ProfilePage
-      : $currentRoute === '/maps' ? MapsPage
+      // : $currentRoute === '/profile' ? ProfilePage
+      // : $currentRoute === '/maps' ? MapsPage
       : $currentRoute === '/schedule' ? SchedulePage
-      : $currentRoute === '/auth/login' ? LoginPage
-      : $currentRoute === '/auth/login-v2' ? LoginV2
-      : $currentRoute === '/auth/login-v3' ? LoginV3
-      : $currentRoute === '/auth/register' ? RegisterPage
-      : $currentRoute === '/auth/register-v2' ? RegisterV2
-      : $currentRoute === '/auth/register-v3' ? RegisterV3
-      : $currentRoute === '/gantt' ? GanttPage
+      // : $currentRoute === '/auth/login' ? LoginPage
+      // : $currentRoute === '/auth/login-v2' ? LoginV2
+      // : $currentRoute === '/auth/login-v3' ? LoginV3
+      // : $currentRoute === '/auth/register' ? RegisterPage
+      // : $currentRoute === '/auth/register-v2' ? RegisterV2
+      // : $currentRoute === '/auth/register-v3' ? RegisterV3
+      // : $currentRoute === '/gantt' ? GanttPage
       : NotFoundPage;
   }
 

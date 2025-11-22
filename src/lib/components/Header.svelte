@@ -201,8 +201,8 @@
       </div>
       
       <!-- Language Switcher -->
-      <LanguageSwitcher />
-      
+      <!-- <LanguageSwitcher />
+       -->
       <!-- Theme Toggle -->
       <ThemeToggle />
       
@@ -227,7 +227,7 @@
       </div>
       
       <!-- Messages -->
-      <div class="relative message-menu">
+      <!-- <div class="relative message-menu">
         <button 
           class="p-2 text-base-content/60 hover:text-base-content hover:bg-base-200 rounded-lg relative transition-colors duration-200"
           on:click={toggleMessageMenu}
@@ -244,10 +244,10 @@
         {#if messageMenuOpen}
           <MessageDropdown isOpen={messageMenuOpen} onClose={closeMessageMenu} />
         {/if}
-      </div>
+      </div> -->
       
       <!-- User menu -->
-      <div class="relative user-menu">
+      <!-- <div class="relative user-menu">
         <button 
           class="flex items-center space-x-3 p-2 rounded-lg hover:bg-base-200 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-200"
           on:click={toggleUserMenu}
@@ -262,10 +262,10 @@
             <p class="text-xs text-base-content/60">Administrator</p>
           </div>
           <Icon icon="heroicons:chevron-down" class="w-4 h-4 text-base-content/60" />
-        </button>
+        </button> -->
         
-        <!-- Dropdown menu -->
-        {#if userMenuOpen}
+        <!-- Dropdown menu 
+         {#if userMenuOpen}
           <div 
             bind:this={dropdownElement}
             class="absolute right-0 mt-2 w-48 bg-base-100 rounded-lg shadow-lg border border-base-300 py-1 z-50"
@@ -293,8 +293,8 @@
               Sign out
             </button>
           </div>
-        {/if}
-      </div>
+        {/if} 
+      </div> -->
     </div>
   </div>
 </header> 
