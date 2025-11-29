@@ -33,6 +33,11 @@
       name: $isLoading ? "Users" : $_("navigation.users"),
     },
     {
+      path: "/astro-targets",
+      icon: "heroicons:star",
+      name: $isLoading ? "Astro Targets" : $_("navigation.astro_targets"),
+    },
+    {
       path: "/products",
       icon: "heroicons:camera",
       name: $isLoading ? "Products" : $_("navigation.products"),

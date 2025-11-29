@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Backyard Sky Planner</title>
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body x-data="astro()">
+
+  <div>
+    <h2>Sky Plot Generator</h2>
+    <input type="text" x-model="targets" placeholder="Targets (comma-separated)" />
+    <input type="datetime-local" x-model="start_time" />
+    <button @click="generate()">Generate</button>
+  </div>
+
+  <div x-show="plot_url">
+    <img :src="plot_url" alt="Sky Plot" style="margin-top:20px; max-width:800px;" />
+  </div>
+
+<script>
+function astro() {
+  return {
+    targets: 'M31,M42,M45',
+    start_time: new Date().toISOString().slice(0,16),
+    plot_url: '',
+    generate() {
+      const targs = this.targets.split(',').map(t => `targets=${t.trim()}`).join('&');
+      this.plot_url = `/skyplot?${targs}&start_time=${this.start_time}:00`;
+    }
+  }
+}
+</script>
+
+</body>
+</html>

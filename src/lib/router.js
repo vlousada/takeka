@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import HomePage from './pages/HomePage.svelte';
 import UsersPage from './pages/UsersPage.svelte';
+import AstroTargets from './pages/AstroTargets.svelte';
 import ProductsPage from './pages/ProductsPage.svelte';
 import AnalyticsPage from './pages/AnalyticsPage.svelte';
 import ProjectManagementPage from './pages/ProjectManagementPage.svelte';
@@ -26,6 +27,7 @@ const navigationHistory = writable([]);
 const routes = {
   '/': HomePage,
   '/users': UsersPage,
+  '/astro-targets': AstroTargets,
   '/products': ProductsPage,
   '/analytics': AnalyticsPage,
   '/projects': ProjectManagementPage,

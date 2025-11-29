@@ -3,6 +3,7 @@
   import DashboardLayout from './lib/components/DashboardLayout.svelte';
   import HomePage from './lib/pages/HomePage.svelte';
   import UsersPage from './lib/pages/UsersPage.svelte';
+  import AstroTargets from './lib/pages/AstroTargets.svelte';
   import ProductsPage from './lib/pages/ProductsPage.svelte';
   // import SettingsPage from './lib/pages/SettingsPage.svelte';
   import AnalyticsPage from './lib/pages/AnalyticsPage.svelte';
@@ -41,6 +42,7 @@
     current = 
       $currentRoute === '/' ? HomePage
       : $currentRoute === '/users' ? UsersPage
+      : $currentRoute === '/dso' ? AstroTargets
       : $currentRoute === '/products' ? ProductsPage
       // : $currentRoute === '/settings' ? SettingsPage
       : $currentRoute === '/analytics' ? AnalyticsPage

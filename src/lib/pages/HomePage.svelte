@@ -19,6 +19,16 @@
   let activityElements = [];
   let actionElements = [];
 
+  // State variables for Skyplot inputs
+  let targetsInput = "";
+  let startTimeInput = "";
+
+  // Function to handle Skyplot updates
+  function updateSkyplot() {
+    console.log("Updating Skyplot with targets:", targetsInput, "and start time:", startTimeInput);
+    // Add logic to update the Skyplot image dynamically if needed
+  }
+
   // Revenue filter period: 'weekly', 'monthly', or 'yearly'
   let period = "monthly";
 
@@ -311,6 +321,52 @@
             </div>
           </div>
         {/each}
+      
+      </div>
+      <div>
+        <!-- skyplot -->
+        <div class="relative mt-6">
+          <h3 class="text-lg font-bold text-base-content">Skyplot</h3>
+          <p class="text-sm text-base-content/70 mt-1">
+            Visual representation of the sky with selected targets.
+          </p>
+          
+            <div class="mt-4">
+            <label for="targets" class="block text-sm font-medium text-base-content">Targets (comma-separated):</label>
+            <input
+              id="targets"
+              type="text"
+              bind:value={targetsInput}
+              placeholder="e.g., M31, M45, M42"
+              class="input input-bordered w-full mt-2"
+            />
+
+            <label for="start_time" class="block text-sm font-medium text-base-content mt-4">Start Time:</label>
+            <input
+              id="start_time"
+              type="datetime-local"
+              bind:value={startTimeInput}
+              class="input input-bordered w-full mt-2"
+            />
+
+            <button
+              on:click={updateSkyplot}
+              class="btn btn-primary mt-4"
+            >
+              Update Skyplot
+            </button>
+            </div>
+          <div class="mt-4">
+            <img
+                src={`http://192.168.1.237:7007/skyplot?${targetsInput
+                .split(',')
+                .map(target => `targets=${encodeURIComponent(target.trim())}`)
+                .join('&')}&start_time=${encodeURIComponent(startTimeInput)}`}
+              alt="Skyplot Graph"
+              class="w-full h-auto rounded-lg shadow-md border border-base-300/50"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>

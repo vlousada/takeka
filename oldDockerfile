@@ -1,0 +1,25 @@
+# --- STAGE 1: BUILDER (Compiles Svelte/Vite App) ---
+    FROM node:22-alpine AS builder
+    WORKDIR /app
+    COPY package*.json ./
+    # Install dependencies, including devDependencies needed for the build
+    RUN npm ci 
+    COPY . .
+    # Run the Vite build, which creates the 'dist/' directory
+    RUN npm run build
+    
+# --- STAGE 2: PRODUCTION RUNTIME (Serves the Static Site) ---
+    FROM node:22-alpine
+    WORKDIR /usr/src/app
+    
+    # Install http-server globally to serve the static content
+    RUN npm install -g http-server
+    
+    # Copy the static assets (HTML, CSS, JS) from the builder's 'dist' folder
+    COPY --from=builder /app/dist ./dist
+    
+    # EXPOSE port 3000 (Internal container port)
+    EXPOSE 3000 
+    
+    # Start http-server on port 3000 (using -s to disable SSL/HTTPS)
+    CMD [ "http-server", "dist", "-s", "-p", "3000" ]

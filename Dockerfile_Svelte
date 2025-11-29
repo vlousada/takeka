@@ -1,0 +1,17 @@
+# --- STAGE 1: BUILDER (Compiles Svelte/Vite App) ---
+FROM node:22-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci 
+COPY . .
+RUN npm run build 
+
+# --- STAGE 2: PRODUCTION RUNTIME (Serves the Static Site) ---
+FROM node:22-alpine
+WORKDIR /usr/src/app
+RUN npm install -g http-server
+COPY --from=builder /app/dist ./dist
+
+EXPOSE 3000 
+# CRITICAL: Run on port 3000 and disable SSL with -s
+CMD [ "http-server", "dist", "-s", "-p", "3000" ]

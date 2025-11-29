@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+astroplan
+astropy
+matplotlib
+numpy
+pymysql
+sqlalchemy
+python-dotenv
+fastapi
+uvicorn
+astroplan
+passlib[bcrypt]

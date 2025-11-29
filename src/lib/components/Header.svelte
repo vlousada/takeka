@@ -3,6 +3,7 @@
   import Icon from '@iconify/svelte';
   import { generateUserAvatar, generateFallbackAvatar } from '../utils/avatar.js';
   import { users } from '../data/dashboard.js';
+  import { dso } from '../data/targets.js';
   import { navigate, currentRoute } from '../router.js';
   import { dropdownAnimations, motionHover } from '../utils/motion.js';
   import NotificationDropdown from './NotificationDropdown.svelte';
@@ -34,6 +35,7 @@
       const fallbackMap = {
         '/': 'Home',
         '/users': 'Users', 
+        '/targets': 'Targets',
         '/products': 'Products',
         '/analytics': 'Analytics',
         '/settings': 'Settings',
@@ -48,6 +50,7 @@
     const routeMap = {
       '/': $_('navigation.home'),
       '/users': $_('navigation.users'), 
+      '/targets': $_('navigation.astroTargets'),
       '/products': $_('navigation.products'),
       '/analytics': $_('navigation.analytics'),
       '/settings': $_('navigation.settings'),
