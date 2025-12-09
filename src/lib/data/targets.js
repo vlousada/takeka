@@ -51,7 +51,7 @@ export const sortOptionsTargets = [
       constelation: "Cas",
       notes: "Emission shell around massive star; narrowband-like benefit",
       image_file: "NGC_7635.png",
-      kanban_step: "0" // Used for departments in the original logic
+      kanban_step: 0 // Used for departments in the original logic
     },
     {
       id: "2",
@@ -68,7 +68,7 @@ export const sortOptionsTargets = [
       constelation: "Her",
       notes: "Emission shell around massive star; narrowband-like benefit",
       image_file: "NGC_7635.png",
-      kanban_step: "0" // Used for departments in the original logic  
+      kanban_step: 0 // Used for departments in the original logic  
     },
     {
       id: "3",
@@ -85,7 +85,7 @@ export const sortOptionsTargets = [
       constelation: "Tau",
       notes: "Emission shell around massive star; narrowband-like benefit",
       image_file: "NGC_7635.png",
-      kanban_step: "1" // Used for departments in the original logic  
+      kanban_step: 1 // Used for departments in the original logic  
     },
         {
       id: "4",
@@ -102,7 +102,7 @@ export const sortOptionsTargets = [
       constelation: "Cyg",
       notes: "Emission shell around massive star; narrowband-like benefit",
       image_file: "NGC_7635.png",
-      kanban_step: "2" // Used for departments in the original logic
+      kanban_step: 2 // Used for departments in the original logic
     }
   ];
 
@@ -138,20 +138,22 @@ export const sortOptionsTargets = [
   // Utility functions
   export function getStatusColor(status) {
     switch (status) {
-      case '0':
+      case 0:
         return 'badge border-white-400 badge-outline';
-      case '1':
+      case 1:
         return 'badge border-gray-400 badge-outline';
-      case '2':
+      case 2:
         return 'badge border-blue-400 badge-outline';
-      case '3':
+      case 3:
         return 'badge border-yellow-400 badge-outline';
-      case '4':
+      case 4:
         return 'badge border-purple-400 badge-outline';
-      case '5':
+      case 5:
         return 'badge border-orange-400 badge-outline';
-      case '9':
+      case 9:
         return 'badge border-green-400 badge-outline';
+      default:
+        return 'badge badge-neutral badge-outline';
     }
   }
 
@@ -159,19 +161,19 @@ export const sortOptionsTargets = [
 
 export function getStatusDisplayText(status) {
   switch (status) {
-    case '0':
+    case 0:
       return 'ToDo';
-    case '1':
+    case 1:
       return 'Planning';
-    case '2':
+    case 2:
       return 'Starting';
-    case '3':
+    case 3:
       return 'Imaging';
-    case '4':
+    case 4:
       return 'Processing';
-    case '5':
+    case 5:
       return 'Reviewing';
-    case '9':
+    case 9:
       return 'Completed';
     default:
       return status;
