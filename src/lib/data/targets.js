@@ -107,16 +107,7 @@ export const sortOptionsTargets = [
   ];
 
 
-  export const kanbanSteps = [
-    { key: '0', name: 'ToDo' },
-    { key: '1', name: 'Planning' },
-    { key: '2', name: 'Starting' },
-    { key: '3', name: 'Imaging' },
-    { key: '4', name: 'Processing' },
-    { key: '5', name: 'Reviewing' },
-    { key: '9', name: 'Completed' }
 
-  ];
   
   // Target table columns
   export const targetColumns = [
@@ -133,36 +124,68 @@ export const sortOptionsTargets = [
   ];
   
 
-  
-// Utility functions
-export function getStatusColor(status) {
-  switch (status) {
-    case 'active':
-      return 'badge badge-success badge-outline';
-    case 'out-of-stock':
-      return 'badge badge-error badge-outline';
-    case 'draft':
-      return 'badge badge-warning badge-outline';
-    default:
-      return 'badge badge-neutral badge-outline';
-  }
-}
+  export const kanbanSteps = [
+    { key: '0', name: 'ToDo', outline_color: 'border-white-400' },
+    { key: '1', name: 'Planning', outline_color: 'border-gray-400' },
+    { key: '2', name: 'Starting' , outline_color: 'border-blue-400'},
+    { key: '3', name: 'Imaging' , outline_color: 'border-yellow-400'},
+    { key: '4', name: 'Processing' , outline_color: 'border-purple-400'},
+    { key: '5', name: 'Reviewing' , outline_color: 'border-orange-400'},
+    { key: '9', name: 'Completed', outline_color: 'border-green-400' }
 
-export function getStockColor(stock) {
-  if (Number(stock) === 0) return "text-error";
-  if (Number(stock) < 20) return "text-warning";
-  return "text-success";
-}
+  ];
+  
+  // Utility functions
+  export function getStatusColor(status) {
+    switch (status) {
+      case '0':
+        return 'badge border-white-400 badge-outline';
+      case '1':
+        return 'badge border-gray-400 badge-outline';
+      case '2':
+        return 'badge border-blue-400 badge-outline';
+      case '3':
+        return 'badge border-yellow-400 badge-outline';
+      case '4':
+        return 'badge border-purple-400 badge-outline';
+      case '5':
+        return 'badge border-orange-400 badge-outline';
+      case '9':
+        return 'badge border-green-400 badge-outline';
+    }
+  }
+
+
 
 export function getStatusDisplayText(status) {
   switch (status) {
-    case 'active':
-      return 'Active';
-    case 'out-of-stock':
-      return 'Out of Stock';
-    case 'draft':
-      return 'Draft';
+    case '0':
+      return 'ToDo';
+    case '1':
+      return 'Planning';
+    case '2':
+      return 'Starting';
+    case '3':
+      return 'Imaging';
+    case '4':
+      return 'Processing';
+    case '5':
+      return 'Reviewing';
+    case '9':
+      return 'Completed';
     default:
       return status;
   }
 } 
+
+
+export function getSubsColor(subs) {
+  if (Number(subs) <= 60) return "text-teal-400";
+  // between 61 and 120
+  if (Number(subs) <= 120) return "text-yellow-400";
+  // lower than 180
+  if (Number(subs) <= 180) return "text-orange-400";
+  // above 180
+  if (Number(subs) > 180) return "text-red-400";
+  return "text-success";
+}

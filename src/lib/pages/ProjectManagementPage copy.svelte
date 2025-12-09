@@ -265,6 +265,20 @@
             class="input input-bordered w-full sm:w-[280px] ps-10 bg-base-100 border-base-300 focus:border-primary focus:ring-2 focus:ring-primary shadow-md hover:shadow-lg transition-all duration-200"
           />
         </div>
+        <!-- Add Task Button -->
+        <button
+          class="btn btn-primary shadow-xl hover:shadow-2xl group relative overflow-hidden whitespace-nowrap"
+          on:click={openAddTaskModal}
+          use:motionHover
+        >
+          <div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          <div class="relative flex items-center">
+            <div class="p-1.5 rounded-lg bg-primary-content/20 group-hover:bg-primary-content/30 transition-colors duration-300">
+              <Icon icon="ph:plus" class="w-5 h-5 mr-2" />
+            </div>
+            {$_('projects.add_task')}
+          </div>
+        </button>
       </div>
     </div>
   </div>
@@ -325,6 +339,12 @@
                       >
                         <Icon icon="heroicons:eye" class="w-4 h-4" />
                       </button>
+                      <button
+                        class="p-1.5 text-base-content/40 hover:text-error rounded-lg bg-base-200/50 hover:bg-error/10 transition-all duration-200"
+                        on:click={() => deleteTask(task.id, status.id)}
+                      >
+                        <Icon icon="heroicons:trash" class="w-4 h-4" />
+                      </button>
                     </div>
                   </div>
 
@@ -347,6 +367,26 @@
                       {/if}
                     </div>
 
+                    <!-- Assignee -->
+                    {#if task.assignee}
+                      <div class="flex items-center space-x-2">
+                        <div class="w-6 h-6 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full flex items-center justify-center shadow-sm">
+                          <Icon icon="heroicons:user" class="w-3 h-3 text-primary" />
+                        </div>
+                        <span class="text-xs text-base-content/70 group-hover:text-base-content transition-colors duration-300">{task.assignee}</span>
+                      </div>
+                    {/if}
+
+                    <!-- Tags -->
+                    {#if task.tags && task.tags.length > 0}
+                      <div class="flex flex-wrap gap-1">
+                        {#each task.tags as tag}
+                          <span class="text-xs bg-gradient-to-r from-primary/10 to-secondary/10 text-primary px-2 py-1 rounded-lg border border-primary/20 shadow-sm group-hover:shadow-md transition-shadow duration-300">
+                            {tag}
+                          </span>
+                        {/each}
+                      </div>
+                    {/if}
                   </div>
                 </div>
               {/each}

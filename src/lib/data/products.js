@@ -110,9 +110,9 @@ export const sortOptions = [
 // Utility functions
 export function getStatusColor(status) {
   switch (status) {
-    case 'active':
+    case '0':
       return 'badge badge-success badge-outline';
-    case 'out-of-stock':
+    case '1':
       return 'badge badge-error badge-outline';
     case 'draft':
       return 'badge badge-warning badge-outline';
@@ -129,9 +129,9 @@ export function getStockColor(stock) {
 
 export function getStatusDisplayText(status) {
   switch (status) {
-    case 'active':
-      return 'Active';
-    case 'out-of-stock':
+    case '0':
+      return 'ToDo';
+    case '1':
       return 'Out of Stock';
     case 'draft':
       return 'Draft';

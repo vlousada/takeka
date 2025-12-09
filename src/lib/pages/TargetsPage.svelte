@@ -8,21 +8,19 @@
       motionHover,
     } from "../utils/motion.js";
 
-  import { 
-    getStatusColor,
-    getStockColor,
-    getStatusDisplayText
-  } from "../data/products.js";
-
   import {
         dso as staticTargetStats, // Renamed to avoid confusion with reactive stat
         objectTypes,
         objectSubtypes,
         kanbanSteps,
         targetColumns,
-        sortOptionsTargets
+        sortOptionsTargets,
+        getStatusColor,
+        getSubsColor,
+        getStatusDisplayText
+
       } from "../data/targets.js";
-    import { each } from "chart.js/helpers";
+
       
     // 2. NEW: Variables for data fetching and state
     const ASTRO_TARGETS_API_URL = "/api/targets/all";
@@ -354,8 +352,8 @@
             }}  
           />
           <div class="absolute top-2 right-2">
-                          <div class="badge {getStatusColor(target.status)} shadow-md">
-              {getStatusDisplayText(target.status)}
+                          <div class="badge {getStatusColor(target.kanban_step)} shadow-md">
+              {getStatusDisplayText(target.kanban_step)}
             </div>
           </div>
         </figure>
@@ -383,12 +381,14 @@
           <hr>
 
           <div class="flex items-center justify-between mb-2">
-            <span class="text-lg font-bold text-base-content group-hover:text-primary transition-colors duration-200"
-              >{target.subs}s</span
-            >
-            <span class="text-sm font-medium {getStockColor(target.integration)}">
+            <span class="text-sm font-medium">
               {target.integration} {$_("targets.integration")}
             </span>
+
+            <span class="text-lg font-bold text-base-content group-hover:text-primary transition-colors duration-200  {getSubsColor(target.subs)}"
+              >{target.subs}s</span
+            >
+
             <span class="text-sm font-medium">
               {target.best}
             </span>            
