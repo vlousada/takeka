@@ -2,14 +2,8 @@
   import { onMount } from "svelte";
   import Icon from "@iconify/svelte";
   import { _, isLoading } from "svelte-i18n";
-  import {
-    generateUserAvatar,
-    generateFallbackAvatar,
-  } from "../utils/avatar.js";
-  import { users, menuItems } from "../data/dashboard.js";
   import { navigate, currentRoute } from "../router.js";
   import { motionInView, staggerAnimate } from "../utils/motion.js";
-  import ThemeLogo from "./ThemeLogo.svelte";
 
   export let isOpen = false;
 
@@ -28,19 +22,14 @@
       name: $isLoading ? "Home" : $_("navigation.home"),
     },
     {
-      path: "/users",
-      icon: "heroicons:sparkles",
-      name: $isLoading ? "Users" : $_("navigation.users"),
-    },
-    {
-      path: "/astro-targets",
+      path: "/targets",
       icon: "heroicons:star",
-      name: $isLoading ? "Astro Targets" : $_("navigation.astro_targets"),
+      name: $isLoading ? "Targets" : $_("navigation.targets"),
     },
     {
-      path: "/products",
-      icon: "heroicons:camera",
-      name: $isLoading ? "Products" : $_("navigation.products"),
+      path: "/dso",
+      icon: "heroicons:moon",
+      name: $isLoading ? "DSO" : $_("navigation.dso"),
     },
     {
       path: "/projects",

@@ -3,69 +3,74 @@ version: "3.9"
 services:
   # 1. SVELTE FRONTEND SERVICE (NEW)
   astro_svelte:
-    # Assuming the Dockerfile for Svelte is in the current directory
-    build: 
-      context: . 
+    build:
+      context: .
       dockerfile: Dockerfile_Svelte
     container_name: svelte_frontend
+    networks:
+      - vika-net
     ports:
-      - 3008:3000  # Expose Svelte frontend on host port 3000
+      - 3008:3000 # Expose Svelte frontend on host port 3000
     restart: unless-stopped
-    # IMPORTANT: No 'ports' mapping is needed, as Caddy will access it internally on 3000
-    
+
+
   # 2. FASTAPI BACKEND SERVICE (MODIFIED)
   astroplanner-api:
-    build: 
+    build:
       context: .
       dockerfile: Dockerfile_Api
-    container_name: astro-api
+    container_name: astroplanner-api
+    networks:
+      - vika-net
     ports:
       - 7007:8000
     restart: unless-stopped
     environment:
       # Use the internal service name 'mariadb'
-      - DATABASE_URL=mysql+pymysql://astro_user:astro_pass@mariadb:3306/astrodb
+      - DATABASE_URL=mysql+pymysql://root:rootpass@mariadb:3306/astrodb
       # Add the FRONTEND_URL for CORS configuration in FastAPI
-      - FRONTEND_URL=https://astro.vlousada.me 
+      - FRONTEND_URL=https://astro.vlousada.me
     volumes:
       - ./app:/app
     # IMPORTANT: Remove the host port mapping (7007:8000)
     # Caddy will access the API internally on port 8000
     depends_on:
       - mariadb
-      
+
   # 3. MARIADB DATABASE SERVICE (UNCHANGED)
   mariadb:
     image: mariadb:11
     container_name: astro-db
+    networks:
+      - vika-net
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: astrodb
-      MYSQL_USER: astro_user
-      MYSQL_PASSWORD: astro_pass
+      MYSQL_USER: root
+      MYSQL_PASSWORD: rootpass
     volumes:
       - mariadb_data:/var/lib/mysql
     # IMPORTANT: Remove the host port mapping (3306:3306)
     # Only the API needs access, which is internal.
-    
-  # 4. PHPMYADMIN SERVICE (UNCHANGED)
+
+    # 4. PHPMYADMIN SERVICE (UNCHANGED)
   phpmyadmin:
     depends_on:
       - mariadb
     image: phpmyadmin:latest
     restart: unless-stopped
-    # If you still want external access to phpmyadmin, keep the port mapping:
+    container_name: astro-phpmyadmin
+    networks:
+      - vika-net
     ports:
       - 8088:80
     environment:
       PMA_HOST: mariadb
       MYSQL_ROOT_PASSWORD: rootpass
       UPLOAD_LIMIT: 128M
-
 volumes:
   mariadb_data: null
-# Docker Compose will create a default network and connect all services.
 
 networks:
   vika-net:

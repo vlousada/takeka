@@ -3,7 +3,6 @@
   import Icon from '@iconify/svelte';
   import { generateUserAvatar, generateFallbackAvatar } from '../utils/avatar.js';
   import { users } from '../data/dashboard.js';
-  import { dso } from '../data/targets.js';
   import { navigate, currentRoute } from '../router.js';
   import { dropdownAnimations, motionHover } from '../utils/motion.js';
   import NotificationDropdown from './NotificationDropdown.svelte';

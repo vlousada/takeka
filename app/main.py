@@ -13,26 +13,23 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from io import BytesIO
 import numpy as np
+import pandas as pd
 
 
 # Use absolute imports instead of relative ones
 import app.database as database
-import app.models as models
-import app.schemas as schemas
-import app.crud as crud
+# import app.models as models
+# import app.schemas as schemas
+# import app.crud as crud
 
 
 from fastapi.middleware.cors import CORSMiddleware
 
 # Get your Svelte frontend URL from an environment variable (best practice)
 # Caddy's routing means the browser sees astro.vlousada.me
+
 FRONTEND_URL = "http://astro.vlousada.me" # Use HTTPS if Caddy is fully set up for it
 
-
-
-
-
-models.Base.metadata.create_all(bind=database.engine)
 
 
 app = FastAPI(title="AstroPlanner API")
@@ -50,6 +47,14 @@ app.add_middleware(
 
 # Static dashboard
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
+app.mount("/images", StaticFiles(directory="app/static/images"), name="images")
+
+#get url for static images  
+my_static_url = f"{FRONTEND_URL}/static/images/"    
+@app.get("/static_url")
+def get_static_url():
+    return {"static_url": my_static_url}
+
 
 @app.get("/")
 def root():
@@ -58,7 +63,8 @@ def root():
 
 # Predefined observer (Lousada)
 home_location = EarthLocation(lat=41.3*u.deg, lon=-8.5*u.deg, height=190*u.m)
-observer = Observer(location=home_location, name="Lousada", timezone="UTC")
+observer = Observer(location=home_location, name="Lousada", timezone="Europe/Lisbon")
+
 
 
 @app.get("/skyplot")
@@ -121,65 +127,110 @@ def skyplot(targets: list[str] = Query(...), start_time: str = Query(...)):
 
 
 
+# --- retrieve astroTargets  from database as json ---
+@app.get("/targets/all", tags=["Astro Targets"])
+def get_astro_targets(db: Session = Depends(database.get_db)):
+    res = {}
+    kanban = {
+        0:"Backlog",
+        1:"Planning",
+        2:"Starting",
+        3:"Imaging",
+        4:"Processing",
+        5:"Reviewing",
+        9:"Completed"
+    }
+    query = 'select * from astroTargets'
+    if Session:
+        df = pd.read_sql(query, con=database.engine)
+        dfCols = []
+        res['kanban'] = kanban
+        if len(df):
+            df = df.fillna('')  # replace NaN with empty string
+            dfCols = list(df.columns)
+            if 'type' in dfCols:
+                df['type'] = df['type'].astype(str)
+                df['type'] = df['type'].apply(lambda x: str(x).lower())
+                res['types'] = df['type'].astype(str).unique().tolist()
+            if 'subtype' in dfCols:
+                df['subtype'] = df['subtype'].astype(str)
+                df['subtype'] = df['subtype'].apply(lambda x: str(x).lower())  
+                res['subtypes'] = df['subtype'].unique().tolist()
+            
+            res['targets'] = df.to_dict(orient='records')
+        # return res as json
+        return res
+    else:
+        raise HTTPException(status_code=500, detail="Database session not available")
 
-# --- USERS ---
-@app.post("/users", response_model=schemas.UserOut)
-def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
-    existing = db.query(models.User).filter(models.User.username == user.username).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="Username already exists")
-    return crud.create_user(db, user)
+# --- post new astroTarget to database with columns parameters---
+@app.post("/targets/new", tags=["Astro Targets"])
+def post_astro_target(dict_values, token, db: Session = Depends(database.get_db)):
+    # Basic token check (replace with real authentication in production)
+    if token != "fomalhaut7":
+        raise HTTPException(status_code=401, detail="Invalid token")
 
-# --- OBSERVATIONS ---
-@app.post("/observations")
-def create_observation(obs: schemas.ObservationCreate, db: Session = Depends(database.get_db)):
-    user = db.query(models.User).filter(models.User.id == obs.user_id).first()
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    return crud.create_observation(db, obs)
-
-
-
-
-
-
-
-from fastapi import APIRouter, Response, Depends, HTTPException
-# (Your token generation logic goes here, e.g., creating a JWT)
-
-@app.post("/login")
-async def login(username: str, password: str, response: Response):
-    # 1. Authenticate user against your database
-    if not authenticate_user(username, password):
-        raise HTTPException(status_code=400, detail="Invalid credentials")
-
-    # 2. Generate a session token (e.g., JWT)
-    session_token = create_access_token({"sub": username})
-
-    # 3. Set the HTTP-Only cookie
-    response.set_cookie(
-        key="session_id",
-        value=session_token,
-        # IMPORTANT SECURITY SETTINGS
-        httponly=True,       # Prevents client-side JS access
-        secure=True,         # Ensures cookie is only sent over HTTPS (if Caddy is active)
-        samesite="lax",      # Good default protection against CSRF
-        max_age=3600 * 24,   # 24 hours expiration
-        path="/"             # Cookie valid for the entire domain
-    )
-    return {"message": "Login successful"}
-
-# C. Protected Endpoint to Read Cookie
-
-from fastapi import Cookie
-
-def verify_session_cookie(session_id: str = Cookie(None)):
-    if session_id is None or not is_valid_token(session_id):
-        raise HTTPException(status_code=401, detail="Not authenticated")
-    # Return user data or ID if successful
-    return get_user_from_token(session_id)
+    query = f"""INSERT INTO astroTargets (object, name, type, subtype, size, unit, best, gear, subs, integration, notes, image_file, kanban_step) 
+                VALUES (
+                '{dict_values.get("object", dict_values["object"])}',
+                '{dict_values.get("name", dict_values["name"])}',
+                '{dict_values.get("type", dict_values["type"])}',
+                '{dict_values.get("subtype", dict_values["subtype"])}',
+                '{dict_values.get("size", dict_values["size"])}',
+                '{dict_values.get("unit", dict_values["unit"])}',
+                '{dict_values.get("best", dict_values["best"])}',
+                '{dict_values.get("gear", dict_values["gear"])}',
+                '{dict_values.get("subs", dict_values["subs"])}',
+                '{dict_values.get("integration", dict_values["integration"])}',
+                '{dict_values.get("notes", dict_values["notes"])}',
+                '{dict_values.get("image_file", dict_values["image_file"])}',
+                {dict_values.get("kanban_step", dict_values["kanban_step"])}
+            );"""
+    try:
+        with db.begin():
+            db.execute(query)
+        return {"message": "New astro target added successfully"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error adding new target: {e}")
 
 
-@app.get("/user/me")
-async def read_current_user(current_user: dict = Depends(verify_session_cookie)):
-    return current_user
+# --- serve static images from astroTargets pngs---
+@app.get("/targets/image/{image_file}", tags=["Astro Targets"])
+def get_astro_target_image(image_file: str):
+    image_path = f"app/static/images/{image_file}"
+    try:
+        with open(image_path, "rb") as image:
+            return Response(content=image.read(), media_type="image/png")
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Image not found")
+
+# --- get top 10 targets for atual best month ---
+@app.get("/targets/bestmonth/{bestmonth}", tags=["Astro Targets"])
+def get_astro_targets_best_month(bestmonth: str, db: Session = Depends(database.get_db)):
+    mesX = str(bestmonth)
+    dict_months = {
+        '1': "jan", '2': "feb", '3': "mar", '4': "apr", '5': "may", '6': "jun",
+        '7': "jul", '8': "aug", '9': "sep", '10': "oct", '11': "nov", '12': "dec"
+    }
+    res = {}
+    str_month = dict_months[mesX] if mesX in dict_months else 'jan'
+    # query to get top 10 targets for the specified month
+
+    query = f"""SELECT * FROM astroTargets 
+                WHERE best LIKE '%%{str_month}%%' 
+                ORDER BY FIELD(kanban_step, 2,3, 0,1,4,5, 9) ASC, 
+                         FIELD(type, 'nebula', 'planetary', 'cluster', 'galaxy',  'other') ASC
+                LIMIT 10;"""
+    if Session:
+        df = pd.read_sql(query, con=database.engine)
+        dfCols = []
+        if len(df):
+            df = df.fillna('')
+            res['targets'] = df.to_dict(orient='records')
+            res['info'] = f"Top 10 targets for month: {str_month}"
+        else:
+            res['targets'] = []
+            res['info'] = f"No targets found for the specified month: {str_month}"
+        return res 
+    else:
+        raise HTTPException(status_code=500, detail="Database session not available")

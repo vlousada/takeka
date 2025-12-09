@@ -1,20 +1,21 @@
 import { writable } from 'svelte/store';
-import HomePage from './pages/HomePage.svelte';
-import UsersPage from './pages/UsersPage.svelte';
+//import HomePage from './pages/HomePage.svelte';
+// import UsersPage from './pages/UsersPage.svelte';
 import AstroTargets from './pages/AstroTargets.svelte';
-import ProductsPage from './pages/ProductsPage.svelte';
+//import ProductsPage from './pages/ProductsPage.svelte';
+import TargetsPage from './pages/TargetsPage.svelte';
 import AnalyticsPage from './pages/AnalyticsPage.svelte';
 import ProjectManagementPage from './pages/ProjectManagementPage.svelte';
-import MapsPage from './pages/MapsPage.svelte';
+// import MapsPage from './pages/MapsPage.svelte';
 import SchedulePage from './pages/SchedulePage.svelte';
 import ProfilePage from './pages/ProfilePage.svelte';
-import SettingsPage from './pages/SettingsPage.svelte';
-import LoginPage from './pages/LoginPage.svelte';
-import LoginV2 from './pages/LoginV2.svelte';
-import LoginV3 from './pages/LoginV3.svelte';
-import RegisterPage from './pages/RegisterPage.svelte';
-import RegisterV2 from './pages/RegisterV2.svelte';
-import RegisterV3 from './pages/RegisterV3.svelte';
+// import SettingsPage from './pages/SettingsPage.svelte';
+// import LoginPage from './pages/LoginPage.svelte';
+// import LoginV2 from './pages/LoginV2.svelte';
+// import LoginV3 from './pages/LoginV3.svelte';
+// import RegisterPage from './pages/RegisterPage.svelte';
+// import RegisterV2 from './pages/RegisterV2.svelte';
+// import RegisterV3 from './pages/RegisterV3.svelte';
 import NotFoundPage from './pages/NotFoundPage.svelte';
 import ChartsPage from './pages/ChartsPage.svelte';
 import GanttPage from './pages/GanttPage.svelte';
@@ -25,23 +26,24 @@ const navigationHistory = writable([]);
 
 // Define routes
 const routes = {
-  '/': HomePage,
-  '/users': UsersPage,
-  '/astro-targets': AstroTargets,
-  '/products': ProductsPage,
+  '/': ProfilePage,
+  // '/users': UsersPage,
+  '/targets': AstroTargets,
+  //'/products': ProductsPage,
+  'dso': TargetsPage,
   '/analytics': AnalyticsPage,
   '/projects': ProjectManagementPage,
   '/gantt': GanttPage,
-  '/maps': MapsPage,
+  // '/maps': MapsPage,
   '/schedule': SchedulePage,
   '/profile': ProfilePage,
-  '/settings': SettingsPage,
-  '/auth/login': LoginPage,
-  '/auth/login-v2': LoginV2,
-  '/auth/login-v3': LoginV3,
-  '/auth/register': RegisterPage,
-  '/auth/register-v2': RegisterV2,
-  '/auth/register-v3': RegisterV3,
+  // '/settings': SettingsPage,
+  // '/auth/login': LoginPage,
+  // '/auth/login-v2': LoginV2,
+  // '/auth/login-v3': LoginV3,
+  // '/auth/register': RegisterPage,
+  // '/auth/register-v2': RegisterV2,
+  // '/auth/register-v3': RegisterV3,
   '/charts': ChartsPage,
   '*': NotFoundPage
 };

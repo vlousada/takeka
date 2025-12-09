@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 import os
 
-DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://astro_user:astro_pass@mariadb:3306/astrodb")
+DATABASE_URL = os.getenv("DATABASE_URL", "mysql+pymysql://root:rootpass@mariadb:3306/astrodb")
 
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)

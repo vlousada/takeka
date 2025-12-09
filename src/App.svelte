@@ -1,14 +1,15 @@
 <script>
   import { onMount } from 'svelte';
   import DashboardLayout from './lib/components/DashboardLayout.svelte';
-  import HomePage from './lib/pages/HomePage.svelte';
-  import UsersPage from './lib/pages/UsersPage.svelte';
+  //import HomePage from './lib/pages/HomePage.svelte';
+  // import UsersPage from './lib/pages/UsersPage.svelte';
   import AstroTargets from './lib/pages/AstroTargets.svelte';
-  import ProductsPage from './lib/pages/ProductsPage.svelte';
+  //import ProductsPage from './lib/pages/ProductsPage.svelte';
+  import TargetsPage from './lib/pages/TargetsPage.svelte';
   // import SettingsPage from './lib/pages/SettingsPage.svelte';
   import AnalyticsPage from './lib/pages/AnalyticsPage.svelte';
   import ProjectManagementPage from './lib/pages/ProjectManagementPage.svelte';
-  // import ProfilePage from './lib/pages/ProfilePage.svelte';
+  import ProfilePage from './lib/pages/ProfilePage.svelte';
   // import MapsPage from './lib/pages/MapsPage.svelte';
   import SchedulePage from './lib/pages/SchedulePage.svelte';
   import NotFoundPage from './lib/pages/NotFoundPage.svelte';
@@ -40,10 +41,11 @@
     
     // Update current component based on route
     current = 
-      $currentRoute === '/' ? HomePage
-      : $currentRoute === '/users' ? UsersPage
-      : $currentRoute === '/dso' ? AstroTargets
-      : $currentRoute === '/products' ? ProductsPage
+      $currentRoute === '/' ? ProfilePage
+      // : $currentRoute === '/users' ? UsersPage
+      : $currentRoute === '/targets' ? AstroTargets
+      // : $currentRoute === '/products' ? ProductsPage
+      : $currentRoute === '/dso' ? TargetsPage
       // : $currentRoute === '/settings' ? SettingsPage
       : $currentRoute === '/analytics' ? AnalyticsPage
       : $currentRoute === '/charts' ? ChartsPage
