@@ -125,13 +125,13 @@ export const sortOptionsTargets = [
   
 
   export const kanbanSteps = [
-    { key: '0', name: 'ToDo', outline_color: 'border-white-400' },
-    { key: '1', name: 'Planning', outline_color: 'border-gray-400' },
-    { key: '2', name: 'Starting' , outline_color: 'border-blue-400'},
-    { key: '3', name: 'Imaging' , outline_color: 'border-yellow-400'},
-    { key: '4', name: 'Processing' , outline_color: 'border-purple-400'},
-    { key: '5', name: 'Reviewing' , outline_color: 'border-orange-400'},
-    { key: '9', name: 'Completed', outline_color: 'border-green-400' }
+    { key: 0, name: 'ToDo', outline_color: 'border-white-400' },
+    { key: 1, name: 'Planning', outline_color: 'border-gray-400' },
+    { key: 2, name: 'Starting' , outline_color: 'border-blue-400'},
+    { key: 3, name: 'Imaging' , outline_color: 'border-yellow-400'},
+    { key: 4, name: 'Processing' , outline_color: 'border-purple-400'},
+    { key: 5, name: 'Reviewing' , outline_color: 'border-orange-400'},
+    { key: 9, name: 'Completed', outline_color: 'border-green-400' }
 
   ];
   

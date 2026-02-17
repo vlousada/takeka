@@ -23,26 +23,23 @@
   ];
 
   // User profile data
-// User profile data
-let profile = {
-  id: 1,
-  name: "Vitor",
-  role: "amateur astrophotographer",
-  department: "Astronomy",
-  avatar:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  location: "Portugal",
-  // use multiline in bio to post
-  bio: "A passionate astrophotographer based in North of Portugal, I was been captivated by the beauty of the night sky since he was a child. My journey into astronomy began when I was just a child, when I first laid eyes on 'Seven Sisters' (also known as the Pleiades) through my father's binoculars. This early fascination with the stars and galaxies has been a ignited a lifelong passion for the field of astronomy. As I grew older, my interest in astronomy expanded with deep space objects such as nebulae, galaxies, and clusters. Over the past two decades using various equipment a steped into astrophotography! With my dSRL camera and a star tracker, I have been able to photograph my first deep sky objects (DSO) - the Ring Nebula (M57). This experience marked the beginning my journey into amateur astrophotographer.",
-  skills: ["JavaScript", "React", "Node.js", "Python", "AWS", "Docker"],
-  telescopes: ['WO SpaceCat 51', 'Askar 91F Apo', 'SW skymax 127'],
-  cameras: ["Canon 700D", 'Sony A7R2', 'ZWO Asi 533', ''],
-  mounts: ["SW Adventure GTI", "ZWO AM3"],
-  languages: ["Portuguese", "English", "Spanish"],
-  timezone: "Lisbon",
-  joinDate: "2007-07-07",
-  lastActive: new Date().toISOString(),
-};
+  let profile = {
+    id: 1,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "Admin",
+    department: "Engineering",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    phone: "+1 (555) 123-4567",
+    location: "San Francisco, CA",
+    bio: "Full-stack developer with 5+ years of experience in web technologies. Passionate about creating user-friendly applications and solving complex problems.",
+    skills: ["JavaScript", "React", "Node.js", "Python", "AWS", "Docker"],
+    languages: ["English", "Spanish"],
+    timezone: "America/Los_Angeles",
+    joinDate: "2023-01-15",
+    lastActive: new Date().toISOString(),
+  };
 
   // Form states
   let isEditing = false;
@@ -424,6 +421,40 @@ let profile = {
 
             <div class="form-control">
               <label class="label">
+                <span class="label-text font-medium">{$_("profile.email")}</span
+                >
+              </label>
+              {#if isEditing}
+                <input
+                  type="email"
+                  bind:value={editForm.email}
+                  class="input input-bordered"
+                  placeholder={$_("profile.email_placeholder")}
+                />
+              {:else}
+                <p class="text-base-content">{profile.email}</p>
+              {/if}
+            </div>
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-medium">{$_("profile.phone")}</span
+                >
+              </label>
+              {#if isEditing}
+                <input
+                  type="tel"
+                  bind:value={editForm.phone}
+                  class="input input-bordered"
+                  placeholder={$_("profile.phone_placeholder")}
+                />
+              {:else}
+                <p class="text-base-content">{profile.phone}</p>
+              {/if}
+            </div>
+
+            <div class="form-control">
+              <label class="label">
                 <span class="label-text font-medium"
                   >{$_("profile.location")}</span
                 >
@@ -577,28 +608,28 @@ let profile = {
                     class="w-4 h-4 text-accent"
                   />
                 </div>
-                {$_("profile.equipment")}
+                {$_("profile.skills_languages")}
               </h2>
 
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h3 class="text-lg font-medium text-base-content mb-3">
-                    {$_("profile.telescopes")}
+                    {$_("profile.skills")}
                   </h3>
                   {#if isEditing}
                     <div class="space-y-2">
-                      {#each editForm.telescopes as telescope, index}
+                      {#each editForm.skills as skill, index}
                         <div class="form-control">
                           <div class="flex items-center space-x-2">
                             <input
                               type="text"
-                              bind:value={editForm.telescopes[index]}
+                              bind:value={editForm.skills[index]}
                               class="input input-bordered input-sm flex-1"
                             />
                             <button
                               class="btn btn-sm btn-circle btn-outline"
                               on:click={() =>
-                                (editForm.telescopes = editForm.telescopes.filter(
+                                (editForm.skills = editForm.skills.filter(
                                   (_, i) => i !== index,
                                 ))}
                             >
@@ -610,7 +641,7 @@ let profile = {
                       <button
                         class="btn btn-sm btn-outline"
                         on:click={() =>
-                          (editForm.telescopes = [...editForm.telescopes, ""])}
+                          (editForm.skills = [...editForm.skills, ""])}
                       >
                         <Icon icon="heroicons:plus" class="w-4 h-4 mr-1" />
                         {$_("profile.add_skill")}
@@ -618,8 +649,8 @@ let profile = {
                     </div>
                   {:else}
                     <div class="flex flex-wrap gap-2">
-                      {#each profile.telescopes as telescope}
-                        <div class="badge badge-outline w-full">{telescope}</div>
+                      {#each profile.skills as skill}
+                        <div class="badge badge-primary">{skill}</div>
                       {/each}
                     </div>
                   {/if}
@@ -627,22 +658,22 @@ let profile = {
 
                 <div>
                   <h3 class="text-lg font-medium text-base-content mb-3">
-                    {$_("profile.mounts")}
+                    {$_("profile.languages")}
                   </h3>
                   {#if isEditing}
                     <div class="space-y-2">
-                      {#each editForm.mounts as mount, index}
+                      {#each editForm.languages as language, index}
                         <div class="form-control">
                           <div class="flex items-center space-x-2">
                             <input
                               type="text"
-                              bind:value={editForm.mounts[index]}
+                              bind:value={editForm.languages[index]}
                               class="input input-bordered input-sm flex-1"
                             />
                             <button
                               class="btn btn-sm btn-circle btn-outline"
                               on:click={() =>
-                                (editForm.mounts = editForm.mounts.filter(
+                                (editForm.languages = editForm.languages.filter(
                                   (_, i) => i !== index,
                                 ))}
                             >
@@ -654,7 +685,7 @@ let profile = {
                       <button
                         class="btn btn-sm btn-outline"
                         on:click={() =>
-                          (editForm.mounts = [...editForm.mounts, ""])}
+                          (editForm.languages = [...editForm.languages, ""])}
                       >
                         <Icon icon="heroicons:plus" class="w-4 h-4 mr-1" />
                         {$_("profile.add_language")}
@@ -662,8 +693,8 @@ let profile = {
                     </div>
                   {:else}
                     <div class="flex flex-wrap gap-2">
-                      {#each profile.mounts as mount}
-                        <div class="badge badge-outline w-full">{mount}</div>
+                      {#each profile.languages as language}
+                        <div class="badge badge-secondary">{language}</div>
                       {/each}
                     </div>
                   {/if}

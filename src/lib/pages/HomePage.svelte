@@ -358,7 +358,7 @@
             </div>
           <div class="mt-4">
             <img
-                src={`http://192.168.1.237:7007/skyplot?${targetsInput
+                src={`http://192.168.1.101:7007/skyplot?${targetsInput
                 .split(',')
                 .map(target => `targets=${encodeURIComponent(target.trim())}`)
                 .join('&')}&start_time=${encodeURIComponent(startTimeInput)}`}
